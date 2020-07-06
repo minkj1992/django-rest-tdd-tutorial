@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from api.serializers import BucketlistSerializer
+from api.models import Bucketlist
+
+class CreateView(generics.ListCreateAPIView):
+    """get list of bucketlists and post a bucketlist"""
+    queryset = Bucketlist.objects.all()
+    serializer_class = BucketlistSerializer
+
+    def perform_create(self, serializer):
+        """post 데이터 저장"""
+        serializer.save()
